@@ -66,10 +66,10 @@ namespace IDatabase
         
     }
 
-    public class DatabaseConnection
+    public class DatabaseConnection : IDatabaseConnection
     {
-       private SqlConnection SqlConnection { get; set; }
-       private MySqlConnection MySqlConnection { get; set; }
+        public SqlConnection SqlConnection { get; set; }
+        public MySqlConnection MySqlConnection { get; set; }
 
         /// <summary>
         /// Get Connection String
