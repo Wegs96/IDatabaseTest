@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
+using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 
 namespace IDatabase
@@ -9,8 +10,9 @@ namespace IDatabase
 
     public class DatabaseConnection : IDatabaseConnection
     {
-        public SqlConnection SqlConnection { get; set; }
-        public MySqlConnection MySqlConnection { get; set; }
+
+        public SqlConnection _SqlConnection { get; set; }
+        public MySqlConnection _MySqlConnection { get; set; }
 
         /// <summary>
         /// Get Connection String
@@ -48,9 +50,9 @@ namespace IDatabase
                 case Provider.SqlServer:
                     try
                     {
-                        using (SqlConnection = new SqlConnection(this._connectionString))
+                        using (_SqlConnection = new SqlConnection(this._connectionString))
                         {
-                            SqlConnection.Open();
+                            _SqlConnection.Open();
 
                             IsConnected = true;
                             return DatabaseConnectionResult.Success;
@@ -81,9 +83,9 @@ namespace IDatabase
 
                     try
                     {
-                        using (MySqlConnection = new MySqlConnection(this._connectionString))
+                        using (_MySqlConnection = new MySqlConnection(this._connectionString))
                         {
-                            MySqlConnection.Open();
+                            _MySqlConnection.Open();
 
                             IsConnected = true;
                             return DatabaseConnectionResult.Success;
@@ -121,10 +123,10 @@ namespace IDatabase
             if (IsConnected)
             {
                 if(this._provider == Provider.SqlServer)
-                     SqlConnection.Close();
+                     _SqlConnection.Close();
 
                 else if (this._provider == Provider.MySql)
-                    MySqlConnection.Close();
+                    _MySqlConnection.Close();
 
             }
         }

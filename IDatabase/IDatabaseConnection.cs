@@ -2,7 +2,8 @@
 using MySql.Data.MySqlClient;
 
 namespace IDatabase
-{ /// <summary>
+{
+    /// <summary>
     /// Database Provider 
     /// </summary>
     public enum Provider
@@ -59,13 +60,12 @@ namespace IDatabase
         /// </summary>
         Success,
 
-
     }
 
     public interface IDatabaseConnection
     {
-        SqlConnection SqlConnection { get; set; }
-        MySqlConnection MySqlConnection { get; set; }
+        SqlConnection _SqlConnection { get; set; }
+        MySqlConnection _MySqlConnection { get; set; }
 
         /// <summary>
         /// Get Connection String
