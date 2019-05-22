@@ -1,4 +1,6 @@
 ﻿using System;
+using IDatabase.Database;
+using IDatabase.Database.providers;
 
 namespace IDatabase
 {
@@ -8,7 +10,7 @@ namespace IDatabase
         {
             Console.WriteLine("Connecting to database...");
 
-            DatabaseConnection database = new DatabaseConnection("test",Provider.SqlServer);
+            DatabaseConnection database = new SqlServerProvider("test");
             database.Connect();
 
 
