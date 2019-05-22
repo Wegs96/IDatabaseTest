@@ -31,18 +31,13 @@ namespace IDatabase.Database.providers
             catch (SqlException e)
             {
                base.OnConnect();
-#if DEBUG
-                Console.WriteLine(e);
-                throw;
-#endif
+               Console.WriteLine(e);
+
             }
             catch (Exception e)
             {
                 base.OnConnect();
-#if DEBUG
                 Console.WriteLine(e);
-                throw;
-#endif
 
             }
         }
@@ -61,11 +56,7 @@ namespace IDatabase.Database.providers
             catch (Exception e)
             {
                 base.OnDisconnect();
-
-#if DEBUG
                 Console.WriteLine(e);
-                throw;
-#endif
             }
         }
     }
