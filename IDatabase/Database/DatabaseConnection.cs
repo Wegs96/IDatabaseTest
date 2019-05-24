@@ -9,8 +9,15 @@ namespace IDatabase.Database
     public abstract class DatabaseConnection
     {
         protected DbConnection DbConnection;
+        /// <summary>
+        /// Check the database connection status
+        /// </summary>
         public bool IsConnected { get; private set; }
 
+        /// <summary>
+        /// Open a new database connection
+        /// </summary>
+        /// <returns></returns>
         public virtual async Task<bool> Open()
         {
             try
@@ -29,7 +36,11 @@ namespace IDatabase.Database
             return true;
         }
 
-
+        /// <summary>
+        /// Execute Query
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         public virtual async Task<bool> Execute(string query)
         {
             using (var command = DbConnection.CreateCommand())
@@ -50,12 +61,18 @@ namespace IDatabase.Database
             }
         }
 
-
+        /// <summary>
+        /// Change the current database
+        /// </summary>
+        /// <param name="databaseName"></param>
         public virtual void ChangeDatabase(string databaseName)
         {
             DbConnection.ChangeDatabase(databaseName);
         }
 
+        /// <summary>
+        /// Close the database connection
+        /// </summary>
         public virtual void Close()
         {
             if(!IsConnected)
