@@ -11,9 +11,6 @@ namespace IDatabase
         {
             Console.WriteLine("Connecting to database...");
 
-            //DatabaseConnection database = new SqlServerProvider("test");
-            //database.Connect();
-
             DatabaseConnection database = new SqlServer("test");
             await database.Open();
 
