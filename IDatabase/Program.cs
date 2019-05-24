@@ -14,7 +14,7 @@ namespace IDatabase
             //DatabaseConnection database = new SqlServerProvider("test");
             //database.Connect();
 
-            DatabaseConnection database = new SqlServer("Server=207.180.222.93,1433;Database=SRO_VT_ACCOUNT;User Id=sa;Password = 123456w;");
+            DatabaseConnection database = new SqlServer("test");
             await database.Open();
 
             database.ChangeDatabase("SRO_VT_ACCOUNT");
