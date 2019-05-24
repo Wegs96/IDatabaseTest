@@ -1,26 +1,77 @@
 ﻿using System;
+using System.Data.Common;
+using System.Threading.Tasks;
+
 
 namespace IDatabase.Database
 {
-    
+
     public abstract class DatabaseConnection
     {
-        public string ConnectionString { get; protected set; }
-        public bool IsConnected { get; protected set; }
+        protected DbConnection DbConnection;
+        public bool IsConnected { get; private set; }
 
-
-        public abstract void Connect();
-        public abstract void Disconnect();
-
-        protected void OnConnect()
+        public virtual async Task<bool> Open()
         {
-            Console.WriteLine(this.IsConnected ? "Database Connected Successfully !" : "Database Connection Failed !");
+            try
+            {
+                if (IsConnected) return false;
+
+                await DbConnection.OpenAsync();
+                IsConnected = true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+
+            return true;
         }
 
-        protected void OnDisconnect()
+
+        public virtual async Task<bool> Execute(string query)
         {
-            Console.WriteLine(this.IsConnected ? "Cannot disconnect from the database !" : "Database Disconnected Successfully !");
+            using (var command = DbConnection.CreateCommand())
+            {
+                command.CommandText = query;
+                try
+                {
+                    await command.ExecuteNonQueryAsync();
+                }
+
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    return false;
+                }
+
+                return true;
+            }
         }
 
-  }
+
+        public virtual void ChangeDatabase(string databaseName)
+        {
+            DbConnection.ChangeDatabase(databaseName);
+        }
+
+        public virtual void Close()
+        {
+            if(!IsConnected)
+                return;
+
+            try
+            {
+                DbConnection.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+    }
+
+
 }
